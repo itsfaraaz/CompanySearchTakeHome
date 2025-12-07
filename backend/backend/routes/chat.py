@@ -68,6 +68,21 @@ SEARCH_TOOL = {
 }
 
 
+class MessagePart(BaseModel):
+    type: str
+    text: Optional[str] = None
+
+
+class Message(BaseModel):
+    id: Optional[str] = None
+    role: str
+    parts: list[MessagePart]
+
+
+class ChatRequest(BaseModel):
+    messages: list[Message]
+
+
 def search_startups(keywords: list[str], city: str | None = None, limit: int = 10) -> list[dict]:
     """Execute the startup search against the database."""
     db = SessionLocal()
@@ -103,21 +118,6 @@ def search_startups(keywords: list[str], city: str | None = None, limit: int = 1
         ]
     finally:
         db.close()
-
-
-class MessagePart(BaseModel):
-    type: str
-    text: Optional[str] = None
-
-
-class Message(BaseModel):
-    id: Optional[str] = None
-    role: str
-    parts: list[MessagePart]
-
-
-class ChatRequest(BaseModel):
-    messages: list[Message]
 
 
 def extract_text(message: Message) -> str:
