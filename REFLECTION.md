@@ -67,13 +67,17 @@ while (true) {
 
 I still use the AI Elements components (`Conversation`, `Message`, `PromptInput`) for the UI because they look good and handle markdown rendering via Streamdown. But the actual streaming logic is plain fetch.
 
+For the LLM model, I initially used Claude 4.5 Haiku which has impressive performance for (1) being a cost efficient model and (2) for being a fairly low latency model. However, Claude 4.5 Sonnet still kind of blows 4.5 Haiku out of the water for intelligence (almost 10 point difference on the AAII benchmark). Because our customer is a VC, I feel that this investment in a more intelligent model (while slightly increasing latency) is a worthwhile cost. With some testing, I found the results of 4.5 Sonnet to be more comprehensive and sensible when asking more obscure questions that require some sort of reasoning.
+
+![](benchmarks.png)
+
 ## Final Implementation
 
 ### Tech Stack
 
 - **Backend**: FastAPI + OpenAI Python SDK + PostgreSQL + SQLAlchemy
 - **Frontend**: React + Vite + Tailwind CSS + AI Elements
-- **LLM**: Claude Haiku 4.5 via OpenRouter
+- **LLM**: Claude Sonnet 4.5 via OpenRouter
 - **Streaming**: Plain text streaming (no complex protocol)
 
 ### search_startups tool
